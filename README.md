@@ -1,1 +1,2 @@
-# adventofcode_2023
+# advent of code
+## https://adventofcode.com/
