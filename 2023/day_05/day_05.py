@@ -1,59 +1,57 @@
-# import re
-#
-# file1 = open('day_05_input.txt', 'r')
-# file_lines = file1.readlines()
-#
-# for line in file_lines:
-#     line = line.strip()
-#     if line.startswith('seeds:'):
-#         seeds = line.split(':')[1].strip().split(' ')
-#
-# seed_map_dic = {}
-#
-# for seed in seeds:
-#     follow = seed
-#     in_mapping = False
-#     source_range = []
-#     destination_range = []
-#     map_found = False
-#     seed_map = {}
-#     current_convert = ''
-#     do_not_have_new_follow = True
-#     for line in file_lines:
-#         line = line.strip()
-#         if 'map:' in line:
-#             current_convert = line.split('-')[2].split(' ')[0]
-#             in_mapping = True
-#             do_not_have_new_follow = True
-#
-#         if in_mapping and line != '' and 'map:' not in line:
-#             destination_start = line.split(' ')[0]
-#             source_start = line.split(' ')[1]
-#             range_length = line.split(' ')[2]
-#
-#             #  source_range = [*range(int(source_start), int(source_start) + int(range_length))]
-#             #  destination_range = [*range(int(destination_start), int(destination_start) + int(range_length))]
-#
-#             if int(source_start) <= int(follow) <= (int(source_start) + int(range_length)) and do_not_have_new_follow:
-#                 # source_seed_index = source_range.index(int(follow))
-#                 # follow = destination_range[source_seed_index]
-#                 follow = int(destination_start) + (int(follow) - int(source_start))
-#                 do_not_have_new_follow = False
-#
-#         if in_mapping:
-#             seed_map[current_convert] = int(follow)
-#             seed_map_dic['Seed ' + seed] = seed_map
-#
-#         if in_mapping and line == '':
-#             in_mapping = False
-#
-# print(seed_map_dic)
-#
-# lowest_location = []
-# for seed in seed_map_dic:
-#     lowest_location.append(seed_map_dic[seed]['location'])
-#
-# print(min(lowest_location))
+file1 = open('day_05_input.txt', 'r')
+file_lines = file1.readlines()
+
+for line in file_lines:
+    line = line.strip()
+    if line.startswith('seeds:'):
+        seeds = line.split(':')[1].strip().split(' ')
+
+seed_map_dic = {}
+
+for seed in seeds:
+    follow = seed
+    in_mapping = False
+    source_range = []
+    destination_range = []
+    map_found = False
+    seed_map = {}
+    current_convert = ''
+    do_not_have_new_follow = True
+    for line in file_lines:
+        line = line.strip()
+        if 'map:' in line:
+            current_convert = line.split('-')[2].split(' ')[0]
+            in_mapping = True
+            do_not_have_new_follow = True
+
+        if in_mapping and line != '' and 'map:' not in line:
+            destination_start = line.split(' ')[0]
+            source_start = line.split(' ')[1]
+            range_length = line.split(' ')[2]
+
+            #  source_range = [*range(int(source_start), int(source_start) + int(range_length))]
+            #  destination_range = [*range(int(destination_start), int(destination_start) + int(range_length))]
+
+            if int(source_start) <= int(follow) <= (int(source_start) + int(range_length)) and do_not_have_new_follow:
+                # source_seed_index = source_range.index(int(follow))
+                # follow = destination_range[source_seed_index]
+                follow = int(destination_start) + (int(follow) - int(source_start))
+                do_not_have_new_follow = False
+
+        if in_mapping:
+            seed_map[current_convert] = int(follow)
+            seed_map_dic['Seed ' + seed] = seed_map
+
+        if in_mapping and line == '':
+            in_mapping = False
+
+print(seed_map_dic)
+
+lowest_location = []
+for seed in seed_map_dic:
+    lowest_location.append(seed_map_dic[seed]['location'])
+
+print(min(lowest_location))
 
 # Part Two
 import re
