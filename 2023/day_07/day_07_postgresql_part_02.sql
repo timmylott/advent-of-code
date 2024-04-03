@@ -1103,21 +1103,15 @@ hand_strengths_new as (
 --now we just build a string of the card strengths in the order of the hand so we can sort later
 hand_strength as (
 	select hand,
-		LISTAGG(
-			lpad(cast(org_card_strength as varchar), 2, '0'),
-			','
-		) WITHIN GROUP (
-			ORDER BY nbr
-		) as ordered_card_strengths
+		string_agg( lpad(cast(org_card_strength as varchar), 2, '0'), ',' ORDER BY nbr)
+		 as ordered_card_strengths
 	from hand_strengths_new
 	group by hand
 ),
 --now we build string of card counts so later we can determine hand type
 card_counts as (
 	select hand,
-		listagg(cast(card_count as varchar), ',') WITHIN GROUP (
-			ORDER BY card
-		) AS card_counts
+		string_agg(cast(card_count as varchar), ',' ORDER BY card) AS card_counts
 	From (
 			select hand,
 				card,
@@ -1125,7 +1119,7 @@ card_counts as (
 			from hand_strengths_new
 			group by hand,
 				card
-		)
+		) as hsn
 	group by hand
 ),
 --put it together, the hand, what is the card strengths in hand order with Jokers of original strength, card counts with swapped out Jokers
