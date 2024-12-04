@@ -56,7 +56,7 @@ check_not_safe as (
 	where length(a.nbrs) >= b.number
 	and a.level_report = 'not_safe'
 ),
---we rebuild each array removing 1 item from each position to get a whole new set or arrays
+--we rebuild each array removing 1 item from each position to get a whole new set of arrays
 hop2 AS (
 	SELECT
 		rw, 
@@ -79,7 +79,7 @@ array_sum2 as (
 	FROM hop2
 	group by rw, new_nbrs
 ),
---while here will no give a new set of safe levels of those not_safe but 1 was removed
+--while here we will get a new set of safe levels of those not_safe but 1 was removed
 levels2 as (
 select
 	rw,
